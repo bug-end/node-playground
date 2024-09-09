@@ -1,7 +1,11 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const port = 3000;
 
-const routes = require('./routes');
+app.use('/', (req, res, next) => {
+  console.log('In the middleware!', req.url);
+});
 
-const server = http.createServer(routes);
-
-server.listen(3000);
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
