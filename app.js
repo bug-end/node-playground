@@ -9,6 +9,7 @@ app.use(express.json());
 
 // Built-in middleware to parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
