@@ -3,8 +3,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-// Set the view engine to pug
-app.set('view engine', 'pug');
+// Set the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 // Import route handlers
 const adminData = require('./routes/admin');
