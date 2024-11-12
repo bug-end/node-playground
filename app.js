@@ -1,5 +1,10 @@
 const path = require('path');
 const express = require('express');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const errorController = require('./controllers/error');
+
 const app = express();
 const port = 3000;
 
@@ -7,26 +12,19 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-// Import route handlers
-const adminData = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-
 // Enable parsing of JSON data in request bodies
 app.use(express.json());
 
 // Built-in middleware to parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: '404 Page Not Found', path: req.url });
-});
+app.use(errorController.get404);
 
 app.listen(port, () => {
   console.log(`App listening on port http://localhost:${port}`);
