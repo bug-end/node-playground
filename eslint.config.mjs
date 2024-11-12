@@ -8,4 +8,5 @@ export default [
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
   eslintPluginPrettier,
+  { rules: { 'prettier/prettier': 'warn', 'no-unused-vars': 'warn' } },
 ];
