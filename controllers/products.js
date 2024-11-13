@@ -13,7 +13,12 @@ exports.postAddProduct = (req, res) => {
   res.redirect('/');
 };
 
-exports.getProducts = (req, res) => {
-  const products = Product.fetchAll();
-  res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.fetchAll();
+    res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error');
+  }
 };
