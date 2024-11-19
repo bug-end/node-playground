@@ -8,17 +8,13 @@ exports.getAddProduct = (req, res) => {
 };
 
 exports.postAddProduct = (req, res) => {
-  const product = new Product(req.body.title);
-  product.save();
+  const newProduct = new Product(req.body.title);
+  newProduct.save();
   res.redirect('/');
 };
 
-exports.getProducts = async (req, res) => {
-  try {
-    const products = await Product.fetchAll();
+exports.getProducts = (req, res) => {
+  Product.fetchAll((products) => {
     res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).render('error');
-  }
+  });
 };
