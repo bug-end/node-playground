@@ -13,8 +13,8 @@ exports.postAddProduct = (req, res) => {
   res.redirect('/');
 };
 
-exports.getProducts = (req, res) => {
+exports.getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
-    res.render('shop/product-list', { prods: products, pageTitle: 'Shop', path: '/' });
+    res.render('admin/products', { prods: products, pageTitle: 'Admin Products', path: '/admin/products' });
   });
 };
