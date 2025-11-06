@@ -8,12 +8,18 @@ exports.getAddProduct = (req, res) => {
 };
 
 exports.postAddProduct = (req, res) => {
-  const newProduct = new Product(req.body.title);
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const description = req.body.description;
+  const price = req.body.price;
+
+  const newProduct = new Product(title, imageUrl, description, price);
   newProduct.save();
+
   res.redirect('/');
 };
 
-exports.getProducts = (req, res, next) => {
+exports.getProducts = (req, res) => {
   Product.fetchAll((products) => {
     res.render('admin/products', { prods: products, pageTitle: 'Admin Products', path: '/admin/products' });
   });
