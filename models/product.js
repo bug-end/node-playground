@@ -10,7 +10,12 @@ const getProductsFromFile = (cb) => {
     if (err) {
       cb([]);
     } else {
-      cb(JSON.parse(fileContent));
+      const content = fileContent.toString().trim();
+      if (content === '') {
+        cb([]);
+      } else {
+        cb(JSON.parse(content));
+      }
     }
   });
 };
@@ -24,7 +29,7 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.random().toString(); // temporary solution to get an id
+    this.id = Date.now().toString(); // temporary solution to get an id
     getProductsFromFile((products) => {
       products.push(this);
       fs.writeFile(filePath, JSON.stringify(products), (err) => {

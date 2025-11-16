@@ -10,7 +10,10 @@ module.exports = class Cart {
     fs.readFile(filePath, (err, fileContent) => {
       let cart = { products: [], totalPrice: 0 };
       if (!err) {
-        cart = JSON.parse(fileContent);
+        const content = fileContent.toString().trim();
+        if (content !== '') {
+          cart = JSON.parse(content);
+        }
       }
 
       // Analyze the cart => Find existing product
@@ -29,7 +32,9 @@ module.exports = class Cart {
 
         cart.products.push(updatedProduct);
       }
-      cart.totalPrice += productPrice;
+
+      // sum up the total price with type conversion
+      cart.totalPrice += Number(productPrice);
 
       fs.writeFile(filePath, JSON.stringify(cart), (err) => console.log(err));
     });
