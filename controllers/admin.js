@@ -14,7 +14,7 @@ exports.postAddProduct = (req, res) => {
   const description = req.body.description;
   const price = req.body.price;
 
-  const newProduct = new Product(title, imageUrl, description, price);
+  const newProduct = new Product(null, title, imageUrl, description, price);
   newProduct.save();
 
   res.redirect('/');
@@ -34,12 +34,25 @@ exports.getEditProduct = (req, res) => {
     }
 
     res.render('admin/edit-product', {
-      product: product,
       pageTitle: 'Edit product',
       path: '/admin/edit-product',
       editing: editMode,
+      product: product,
     });
   });
+};
+
+exports.postEditProduct = (req, res) => {
+  const productId = req.body.productId;
+  const updatedTitle = req.body.title;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedDescription = req.body.description;
+  const updatedPrice = req.body.price;
+
+  const updatedProduct = new Product(productId, updatedTitle, updatedImageUrl, updatedDescription, updatedPrice);
+  updatedProduct.save();
+
+  res.redirect('/admin/products');
 };
 
 exports.getProducts = (req, res) => {
@@ -47,5 +60,3 @@ exports.getProducts = (req, res) => {
     res.render('admin/products', { prods: products, pageTitle: 'Admin Products', path: '/admin/products' });
   });
 };
-
-exports.postEditProduct = (req, res) => {};
