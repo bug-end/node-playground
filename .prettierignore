@@ -1,2 +1,2 @@
 # Ignoring specific ejs files
-views/includes/head.ejs
+src/views/includes/head.ejs

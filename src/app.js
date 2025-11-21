@@ -10,7 +10,7 @@ const port = 3000;
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 
 // Enable parsing of JSON data in request bodies
 app.use(express.json());
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
