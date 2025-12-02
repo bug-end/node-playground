@@ -5,6 +5,7 @@ const express = require('express');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/error');
+const sequelize = require('./utils/database');
 
 const app = express();
 const port = 3000;
@@ -27,6 +28,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(port, () => {
-  console.log(`App listening on port http://localhost:${port}`);
-});
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`App listening on port http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(err));
