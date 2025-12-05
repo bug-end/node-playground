@@ -38,7 +38,7 @@ exports.getEditProduct = (req, res) => {
 
   Product.findByPk(productId)
     .then((product) => {
-      if (!productId) {
+      if (!product) {
         return res.redirect('/');
       }
 
@@ -61,6 +61,9 @@ exports.postEditProduct = (req, res) => {
 
   Product.findByPk(productId)
     .then((product) => {
+      if (!product) {
+        return res.redirect('/admin/products');
+      }
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDescription;
@@ -86,6 +89,9 @@ exports.postDeleteProduct = (req, res) => {
 
   Product.findByPk(productId)
     .then((product) => {
+      if (!product) {
+        return res.redirect('/admin/products');
+      }
       return product.destroy();
     })
     .then((result) => {
