@@ -6,6 +6,8 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/error');
 const sequelize = require('./utils/database');
+const Product = require('./models/product');
+const User = require('./models/user');
 
 const app = express();
 const port = 3000;
@@ -25,11 +27,13 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-
 app.use(errorController.get404);
 
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     app.listen(port, () => {
       console.log(`App listening on port http://localhost:${port}`);
